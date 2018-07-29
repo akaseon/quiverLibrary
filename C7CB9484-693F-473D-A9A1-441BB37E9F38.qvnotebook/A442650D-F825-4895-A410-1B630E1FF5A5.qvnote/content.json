@@ -1,0 +1,9 @@
+{
+  "title": "What do the identifiers PID, PPID, SID, PGID, UID, EUID mean?",
+  "cells": [
+    {
+      "type": "markdown",
+      "data": "They're as follows\n\nPID - Process ID\nPPID - Parent Process ID\nSID - Session ID\nPGID - Process Group ID\nUID - User ID\nEUID - Effective User ID\nTake a look at this SO Post and the first answer for a healthy explanation of what they're for.\n\nFrom the recommended page of definitions they posted\nhttp://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html\n\n3.270 Parent Process ID\n\nAn attribute of a new process identifying the parent of the process. The parent process ID of a process is the process ID of its creator, for the lifetime of the creator. After the creator's lifetime has ended, the parent process ID is the process ID of an implementation-defined system process.\n3.343 Session\n\nA collection of process groups established for job control purposes. Each process group is a member of a session. A process is considered to be a member of the session of which its process group is a member. A newly created process joins the session of its creator. A process can alter its session membership; see setsid(). There can be multiple process groups in the same session.\n3.296 Process Group\n\nA collection of processes that permits the signaling of related processes. Each process in the system is a member of a process group that is identified by a process group ID. A newly created process joins the process group of its creator.\n3.297 Process Group ID\n\nThe unique positive integer identifier representing a process group during its lifetime.\n3.142 Effective User ID\n\nAn attribute of a process that is used in determining various permissions, including file access permissions; see also User ID.\n\nhttps://stackoverflow.com/questions/41498383/what-do-the-identifiers-pid-ppid-sid-pgid-uid-euid-mean"
+    }
+  ]
+}
