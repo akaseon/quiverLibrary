@@ -1,0 +1,13 @@
+{
+  "title": "No.41 템플릿 프로그래밍의 천릿길도 암시적 인터페이스와 컴파일 타임 다형성 부터",
+  "cells": [
+    {
+      "type": "markdown",
+      "data": "- 명시적 인터페이스(explicit interface)\n- 런타임 다형성(runtime polymorphism)\n\n```c++\nclass Widget\n{\npublic:\n    Widget();\n    virtual ~Widget();\n    \n    virtual std::szie_t size() const;\n    virtual void normalize();\n    void swap( Widget & other );\n    ...\n};\n\nvoid doProcessing( Widget & w )\n{\n    if ( ( w.size() > 10 ) && ( w != someNastyWidget ) )\n    {\n        Widget temp( w );\n        temp.normalize();\n        temp.swap( w );\n    }\n}\n```\n\n- w 는 Widget타입으로 선언되었으므로 w는 Widget 인터페이스를 지원, 인터페이스를 소스코드에서 찾으면 이것이 어떤형태인지 알수 있으며 이런 인터페이스를 가리켜 명시적 인터페이스라 함\n- Widget 의 멤버 함수중 몇개는 가상함수이므로, 이 가상함수에 대한 호출은 런타임 다형성에 의해 이루어짐\n\n```c++\ntemplate<typename T>\nvoid doProcessing( T & w )\n{\n    if ( ( w.size() > 10 ) && ( w != someNastyWidget ) )\n    {\n        T temp( w );\n        temp.normalize();\n        temp.swap( w );\n    }\n}\n```\n\n- w 가 지원해야하는 인터페이스는 이 템플릿 안에서 w에 대해 실행되는 연산이 결정, size, normalize, swap 멤버함수 그리고 복사 생성자, 부동 비교를 위한 연산도 지원해야 함\n- 템플릿이 제대로 컴파일되려면 몇개의 표현식이 유효해야하는데 이 표현식들은 바로 T가 지원해야 하는 암시적 인터페이스 이다.\n- w 가 수반하는 함수를 호출할때 이 함수 호출을 성공 시키기 위해 템플릿의 인스턴스화가 일어난다. 이러한 인스턴스화는 컴파일 도중이다. \n- 인스턴스화를 진행하는 함수 템플릿에 어떤 템플릿 매개변수가 들어가느냐에 따라 호출되는 함수가 달라진다. 이를 컴파일 타입 다형성이라 한다.\n\n명시적 인터페이스는 대새 함수 시그니처로 이루어진다. 시그니쳐는 함수의 이름, 매개변수 타입, 반환 타입들을 통들어 부르는 용어이다.\n\n암시적 인터페이스는 함수 시그니처에 기반하고 있지 않다. 암시적 인터페이스를 이루는 요소는 유효 표현식이다. \n```c++\ntemplate<typename T>\nvoid doProcessing( T & w )\n{\n    if ( ( w.size() > 10 ) && ( w != someNastyWidget ) )\n    {\n    ...\n```\nT 에서 제공될 암시적 인터페이스에는 다음과 같은 제약이 걸린다.\n- 정수 계열의 값을 반환하고 이름이 size 인 함수를 지원\n- T 타입의 객체 둘을 비교하는 operator!= 함수를 지원\n\n실제로는 연산자 오버로딩의 가능성이 있기 때문에 T는 위의 두가지 제약중 어떤것도 만족시킬 필요가 없다.\n- size 함수를 제공해야 하지만 int(10) 가 함께 호출되는 operator> 가 성립될수만 있으면 된다.\n- operator!= 함수가 x 타입의 객체 하나와 y 타입의 객체 하나를 받을수 있으면 된다. T가 x로 변환, someNastyWidget의 타입이 y로 변환이 가능하면 된다. \n\n\n> 클래스 및 템플릿은 모두 인터페이스와 다형성을 지원\n> 클래스의 경우, 인터페이스는 명시적이며 함수의 시그니처를 중심으로 구성, 다형성은 프로그램 실행중에 가상함수를 통해 나타남\n> 템플릿 매개변수의 경우, 인터페이스는 암시적이며 유효 표현식에 기반을 두어 구성, 다형성은 컴파일중에 템플릿 인스턴스호와 함수 오버로딩 모호성 해결을 통해 나타남"
+    },
+    {
+      "type": "markdown",
+      "data": ""
+    }
+  ]
+}
