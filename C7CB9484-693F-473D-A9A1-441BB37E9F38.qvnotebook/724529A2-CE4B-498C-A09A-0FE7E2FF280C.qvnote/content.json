@@ -1,0 +1,9 @@
+{
+  "title": "setsid()",
+  "cells": [
+    {
+      "type": "markdown",
+      "data": "SETSID(2)                   BSD System Calls Manual                  SETSID(2)\n\nNAME\n     setsid -- create session and set process group ID\n\nSYNOPSIS\n     #include <unistd.h>\n\n     pid_t\n     setsid(void);\n\nDESCRIPTION\n     The setsid function creates a new session.  The calling process is the session leader of the new session, is the process group leader of a new\n     process group and has no controlling terminal.  The calling process is the only process in either the session or the process group.\n\n     Upon successful completion, the setsid function returns the value of the process group ID of the new process group, which is the same as the\n     process ID of the calling process.\n\nERRORS\n     If an error occurs, setsid returns -1 and the global variable errno is set to indicate the error, as follows:\n\n     [EPERM]            The calling process is already a process group leader, or the process group ID of a process other than the calling process\n                        matches the process ID of the calling process.\n\nLEGACY SYNOPSIS\n     #include <sys/types.h>\n     #include <unistd.h>\n\n     The include file <sys/types.h> is necessary.\n\nSEE ALSO\n     setpgid(3), tcgetpgrp(3), tcsetpgrp(3), compat(5)\n\nSTANDARDS\n     The setsid function is expected to be compliant with the IEEE Std 1003.1-1988 (``POSIX.1'') specification.\n\nBSD                              June 4, 1993                              BSD\n(END)\n"
+    }
+  ]
+}
