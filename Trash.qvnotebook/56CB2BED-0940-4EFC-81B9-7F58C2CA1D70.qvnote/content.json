@@ -1,0 +1,9 @@
+{
+  "title": "auto_ptr",
+  "cells": [
+    {
+      "type": "markdown",
+      "data": "소유권을 넘긴다는 의미는 기존자원을 NUL 로 변경하고 새로 복사된 객체를 유지 "
+    }
+  ]
+}

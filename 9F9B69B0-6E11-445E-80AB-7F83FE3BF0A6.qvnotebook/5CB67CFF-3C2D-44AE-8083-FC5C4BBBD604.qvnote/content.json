@@ -1,0 +1,17 @@
+{
+  "title": "const 키워드",
+  "cells": [
+    {
+      "type": "markdown",
+      "data": "const \n - 변수를 상수화\n - 변수의 값을 변경하지 못하도록 하는 키워드\n \n1. 변수 선언시\n\nconst 자료형 변수명 : 변수의 값을 상수화\n자료형 const * 변수명 ( const 자료형 * 변수명 ) : 포인터가 가르키는 값을 상수화\n자료형 * const 변수명 : 포인터 값을 상수화\n자료형 const * const 변수명 : 포인터 값과 포인터가 가르키는 값을 상수화\n \n```c++\nvoid Foo( int * ptr,\n          int const * ptrToConst,\n          int * const constPtr,\n          int const * const constPtrToConst )\n{\n    *ptr = 0;                   // OK: modifies the \"pointee\" data\n    ptr  = NULL;                // OK: modifies the pointer\n\n    *ptrToConst = 0;            // Error! Cannot modify the \"pointee\" data\n    ptrToConst  = NULL;         // OK: modifies the pointer\n\n    *constPtr = 0;              // OK: modifies the \"pointee\" data\n    constPtr  = NULL;           // Error! Cannot modify the pointer\n\n    *constPtrToConst = 0;       // Error! Cannot modify the \"pointee\" data\n    constPtrToConst  = NULL;    // Error! Cannot modify the pointer\n}\n```\n\n```c++\nclass C\n{\n    int i;\npublic:\n    int Get() const     // Note the \"const\" tag\n    { \n        return i; \n    }\n    \n    void Set(int j)     // Note the lack of \"const\"\n    { \n        i = j;\n    }\n};\n\nvoid Foo( C& nonConstC, \n          const C& constC)\n{\n    int y = nonConstC.Get();    // Ok\n    int x = constC.Get();       // Ok: Get() is const\n\n    nonConstC.Set(10);          // Ok: nonConstC is modifiable\n    constC.Set(10);             // Error! Set() is a non-const method and \n                                // constC is a const-qualified object\n}\n```\n\n2. 함수 선언시 \n\n함수 리턴값\n\n```c++\nclass MyArray\n{\n    int data[100];\npublic:\n    int &       Get(int i)       { return data[i]; }\n    int const & Get(int i) const { return data[i]; }\n};\n\nvoid Foo( MyArray & array, MyArray const & constArray )\n{\n    // Get a reference to an array element\n    // and modify its referenced value.\n\n    array.Get( 5 )      = 42; // OK! (Calls: int & MyArray::Get(int))\n    constArray.Get( 5 ) = 42; // Error! (Calls: int const & MyArray::Get(int) const)\n}\n```\nconst 함수\n    \n```c++\nclass MyArray\n{\n    int mData[100];\n    \npublic:\n    void nonConstSet( int aIndex, int aValue )\n    {\n        mData[aIndex] = aValue;\n    }\n    \n    void constSet( int aIndex, int aValue ) const\n    {\n        mData[aIndex] = aValue;  // read-only variable is not assignable\n                                 // mData[aIndex] = aValue;\n\n    }\n};\n```\n\n3. const 클래스 선언시\n데이터 변경이 허용되지 않는 클래스\n\n사용자가 생성자를 만들어주어야 함\n\n```c++\n> g++ a.cpp\n//default initialization of an object of const type\n// 'const MyArray' without a user-provided default constructor\n// const MyArray   constArray;\n```\n\n\nconst 함수외 사용 불가\n\n```c++\nMyArray nonConstArray;\nconst MyArray constArray;\n\nnonConstArray.nonConstSet( 0 , 1 );\nconstArray.nonConstSet( 0 , 1 );        // member function 'nonConstSet' not viable:\n                                        // 'this' argument has\n                                        // type 'const MyArray', but function is not marked const\n\n\n```\n\nhttp://duramecho.com/ComputerInformation/WhyHowCppConst.html\nhttp://stackoverflow.com/questions/455518/how-many-and-which-are-the-uses-of-const-in-c\n"
+    },
+    {
+      "type": "markdown",
+      "data": ""
+    },
+    {
+      "type": "markdown",
+      "data": ""
+    }
+  ]
+}

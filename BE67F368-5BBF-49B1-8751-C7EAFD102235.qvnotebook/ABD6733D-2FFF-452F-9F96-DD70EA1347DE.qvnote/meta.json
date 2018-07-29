@@ -1,0 +1,10 @@
+{
+  "created_at" : 1509861842,
+  "tags" : [
+    "c++",
+    "effective c++"
+  ],
+  "title" : "No.36 상속받은 비가상 함수를 파생 클래스에서 재 정의하는 것은 절대 금물",
+  "updated_at" : 1509863602,
+  "uuid" : "ABD6733D-2FFF-452F-9F96-DD70EA1347DE"
+}

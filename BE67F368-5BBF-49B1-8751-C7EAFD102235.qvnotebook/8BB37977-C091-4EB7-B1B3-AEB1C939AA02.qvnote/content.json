@@ -1,0 +1,9 @@
+{
+  "title": "No.37 어떤 함수에 대해서도 상속받는 기본 매개변수 값은 절대로 재정의하지 말자",
+  "cells": [
+    {
+      "type": "markdown",
+      "data": "상속받을수 있는 함수의 종류는 가상함수와 비가상 함수 뿐이다.\n\n가상함수는 동적으로 바인딩되지만 기본 매개변수 값은 정적으로 바인딩된다.\n\n```c++\nclass Shape\n{\n    public:\n        enum ShapeColor { Red, Green, Blue };\n        \n        virtual void draw( ShapeColor color = Red ) const = 0;\n        ...\n};\n\nclass Rectangle: public Shape\n{\n    public:\n        virtual void draw( ShapeColor color = Green ) const;\n        ...\n};\n\nclass Circle: public Shape\n{\n    public:\n        virtual void draw( ShapeColor color ) const;\n        ...\n};\n\nShape   * ps;\nShape   * pc = new Circle;\nShape   * pr = new Rectangle;\n\n// 가상 함수는 동적으로 바인딩\npc->draw( Shape::Red ); // Circle::draw( Shape::Red );\npr->draw( Shape::Red ); // Rectangle::draw( Shape:: Red );\n\n// 기본 매개변수는 정적으로 바인딩\npr->draw();             // Rectangle::draw( Shape::Red );\n```\n\n```c++\nclass Shape\n{\n    public:\n        enum ShapeColor { Red, Green, Blue };\n        virtual void draw( ShapeColor color = Red ) const = 0;\n        ...\n};\n\nclass Rectangle: public Shape\n{\n    public:\n        virtual void draw( ShapeColor color = Red ) const; // 중복 코드\n        ...\n};\n```\n\n비가상 인터페이스(non-virtual interface) 관용구 사용 \n```c++\nclass Shape\n{\n    public:\n        enum ShapeColor { Red, Green, Blue };\n        void draw( ShapeColor color = Red ) const\n        {\n            doDraw( color );\n        }\n        ...\n    private:\n        virtual void doDraw( ShapeColor color ) const = 0;\n};\n\nclass Rectangle: public Shape\n{\n    public:\n    ...\n    private:\n        virtual void doDraw( ShapeColor color ) const;\n        ...\n};\n```\n\n> 상속받은 기본 매개변수값은 절대로 재정의 하면 안된다. 왜냐하면 기본 매개변수 값은 정적으로 바인딩되는 반면, 가상함수는 동적으로 바인딩된다.\n\n\n"
+    }
+  ]
+}

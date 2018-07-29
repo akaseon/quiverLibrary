@@ -1,0 +1,9 @@
+{
+  "title": "Chapter 01. An Overview of Optimization",
+  "cells": [
+    {
+      "type": "markdown",
+      "data": "- Optimization Is Part of Software Development\nOptimization is also an iterative process in which each time the slowest part of the program is improved, a new slowest part appears.\n\n- Optimization Is Effective\n\n- It’s OK to Optimize\nWe should forget about small efficiencies, say about 97 percent of the time: premature optimization is the root of all evil.\n—Donald Knuth\n\n- A Nanosecond Here, a Nanosecond There\n\n- Summary of Strategies for Optimizing C++ Code\n\n- Use a Better Compiler, Use Your Compiler Better\n\n- Use Better Algorithms\n\n- Use Better Libraries\n\n- Reduce Memory Allocation and Copying\n\n- Remove Computation\n\n- Use Better Data Structures\n\n- Increase Concurrency\n\n- Optimize Memory Management\n\n"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "title": "No.38 “has-a” 혹은 “is-implemented-in-terms-of” 를 모형화할 때는 객체 합성을 사용하자 ",
+  "cells": [
+    {
+      "type": "markdown",
+      "data": "```c++\nclass Address { ... };\n\nclass PhoneNumber { ... };\n\nclass Person\n{\n    public:\n    ...\n    private:\n        std::string name;\n        Address     address;\n        PhoneNumber voidNumber;\n        PhoneNumber faxnNumber;\n};\n```\n\n\"is-a\" 는 \"has-a\" 와 \"is-isimplmented-in-terms-of\" 을 뜻한다.\n\n소프트웨어 개발에서 개발자가 마주하는 영역이 두가지 이다.\n\n소프트웨어의 응용영역\n- 객체중에는 우리 일상생활에서 볼수 있는 사물을 본뜬것\n\n소프트웨어의 구현영역\n- 응용영역에 속하는 않는 나머지들\n- 버퍼, 뮤텍스, 탐색트리 등 순수하게 시스템 구현만을 위한 인공물\n\n객체 합성이 응용역역에서 일어나면 has-a\n객체 합성이 구현영역에서 일어나면 is-implemented-in-terms-of\n\n```c++\n// Set 를 만들기 위해서 List 를 잘못 사용한 예\ntemplate<typename T>\nclass Set: public std::list<T> { ... };\n```\n\n```c++\n// Set 를 만드는데 List 를 제대로 사용하는 방법\ntemplate<Class T>\nclass Set\n{\n    public:\n        bool member( const T& item ) const;\n        void insert( const T& item );\n        void remove( const T& item );\n        \n        std::size_t size() const;\n    \n    private:\n        std::list<T> rep; // Set 데이터의 내부 표현부\n};\n\ntemplate<typename T>\nbool Set<T>::member( const T& item ) const\n{\n    return std::find( rep.begin(), rep.end(), item ) != rep.end();\n}\n\ntemplate<typename T>\nvoid Set<T>::insert( const T& item )\n{\n    if( !member( item ) ) rep.pushback( item );\n}\n\ntemplate<typename T>\nvoid Set<T>::remove( const T& item )\n{\n    typename std::list<T>::iterator it = std::find( rep.begin(), rep.end(), item );\n    \n    if ( it != rep.end() ) rep.erase( it );\n};\n\ntemplate<typename T>\nstd::size_t Set<T>::size() const\n{\n    return rep.size();\n}\n```\n\n> 객체 합성의 의미는 public 상속이 가진 의미와 완전히 다르다.\n> 응용 영역에서 객체 합성의 의미는 has-a 이다. 구현 영역에서는 is-implemented-in-terms-of 의 의미를 갖는다.\n\n"
+    }
+  ]
+}
